@@ -1,0 +1,14 @@
+O JDBC é muito verboso e a API é meio estranha de usar, sem contar que gera um alto acoplamento do nosso código com o banco de dados, de forma que temos que fazer alterações em todo o nosso código quando alguma tabela mudar de nome ou algo do tipo.
+
+A JPA, assim como o Hibernate, foram criados para serem usados no lugar do JDBC quando integramos nossos sistemas com o banco de dados, assim simplificando esses processos.
+
+============Hibernate============
+
+É uma biblioteca de mercado (não oficial do Java) que surgiu como uma tentativa de substituir o JDBC puro, assim como o EJB2, e ganhou muita popularidade devido à sua maior facilidade de trabalhar com bancos de dados utilizando um ORM.
+
+============JPA============
+
+A JPA é uma especificação que surgiu para padronizar o ORM no mundo Java, de forma que se as bibliotecas que implementam o ORM (Hibernate ou outras) fossem trocadas no projeto, apenas configurações teriam que ser mudadas, não o código em si, funcionando de maneira similar à especificação do JDBC, que pode ser usado com vários drivers diferentes.
+
+Essa especificação facilitou muito a vida dos desenvolvedores, fazendo com que os sistemas não ficassem dependentes de implementações.
+
