@@ -1,28 +1,35 @@
 package br.com.alura.loja;
 
+import br.com.alura.loja.model.Categoria;
+import br.com.alura.loja.model.CategoriaDAO;
 import br.com.alura.loja.model.Produto;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import br.com.alura.loja.model.ProdutoDAO;
+import br.com.alura.loja.util.JPAUtil;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 
 public class LojaApplication {
     public static void main(String[] args) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("loja");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
+        CategoriaDAO categoriaDAO = new CategoriaDAO(entityManager);
 
         try {
-            Produto colher = new Produto(null, "Colher", "Muito util!", new BigDecimal("10"));
+            Categoria talher = new Categoria("Talher");
+
+            Produto colher = new Produto("Garfo", "Um pouco util.", talher, new BigDecimal("10"));
 
             entityManager.getTransaction().begin();
-            entityManager.persist(colher);
+
+            categoriaDAO.cadastrar(talher);
+            produtoDAO.cadastrar(colher);
+
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         } finally {
-            entityManagerFactory.close();
             entityManager.close();
         }
     }

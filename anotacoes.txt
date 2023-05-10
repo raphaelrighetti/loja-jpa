@@ -56,6 +56,12 @@ Boa parte das annotations que adicionamos e configurações que fazemos nas enti
 
 Importante saber que, se não estivermos utilizando o Hibernate, devemos adicionar uma tag "class" no "persistence.xml" para cada entidade que criarmos no sistema, contendo o full qualified name das classes. Se estivermos utilizando o Hibernate não precisamos fazer isso, pois ele procura as entidades automaticamente.
 
+============CARDINALIDADE============
+
+As annotations de cardinalidade sempre se referem primeiro à entidade na qual estamos colocando a annotation.
+
+No exemplo de "@ManyToOne", seriam muitos registros da entidade com a annotation para um registro da outra entidade.
+
 ============EntityManager============
 
 É a interface que utilizamos para fazer toda a persistência das nossas entidades no banco de dados.
@@ -63,3 +69,9 @@ Importante saber que, se não estivermos utilizando o Hibernate, devemos adicion
 Para criarmos um EntityManager, precisamos de um "EntityManagerFactory", que será encarregado de nos retornar um EntityManager do jeito que a gente precisa quando utilizarmos o método "createEntityManager()".
 
 Para criarmos um "EntityManagerFactory", precisamos utilizar o método estático "createEntityManagerFactory(<nome da persistence-unit>)" da classe "Persistence", que vem com o JPA. Sempre precisamos passar o nome da persistence-unit neste método.
+
+============DAO============
+
+Na JPA é muito comum o uso de DAOs, assim como no JDBC.
+
+Nas nossas classes DAO é comum que façamos apenas as ações de acesso a dados das nossas entidades. Coisas como a criação de um EntityManager ou algo do tipo não são responsabilidade das classes DAO.

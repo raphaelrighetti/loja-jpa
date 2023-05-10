@@ -23,3 +23,11 @@ Também vi que as annotations que usamos no JPA são as mesmas que já estou aco
 Além disso, aprendi a usar o EntityManager para persistir os dados no banco de dados, assim como controlar as transações manualmente, tendo em vista que não estou utilizando o "transaction-type" RESOURCE_LOCAL.
 
 Tive que mudar a minha dependência do Hibernate para conseguir acompanhar o curso fielmente utilizando o "javax" em vez do "jakarta" e também tive que fazer algumas modificações para conseguir usar o postgre como banco, mas no fim deu tudo certo.
+
+### Aula 3
+
+#### Aplicando relacionamento
+
+Nesta aula vi que também é comum utilizar DAOs quando estamos trabalhando com a JPA, assim como no JDBC, além de ter visto que realmente é comum não deixar lógicas de transação e abertura de EntityManager, ou algo parecido, dentro do código dos nossos DAOs.
+
+Além disso, vi como aplicar um relacionamento entre duas entidades JPA, que não é diferente da forma que fazemos no Spring Data JPA.
