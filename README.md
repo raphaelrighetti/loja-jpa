@@ -31,3 +31,11 @@ Tive que mudar a minha dependência do Hibernate para conseguir acompanhar o cur
 Nesta aula vi que também é comum utilizar DAOs quando estamos trabalhando com a JPA, assim como no JDBC, além de ter visto que realmente é comum não deixar lógicas de transação e abertura de EntityManager, ou algo parecido, dentro do código dos nossos DAOs.
 
 Além disso, vi como aplicar um relacionamento entre duas entidades JPA, que não é diferente da forma que fazemos no Spring Data JPA.
+
+### Aula 4
+
+#### Entendendo ciclo de vida
+
+Nesta aula aprendi sobre o ciclo de vida das entidades e os possíveis estados delas nas ações possíveis.
+
+É muito bom entender esse ciclo de vida, pois agora entendo o porquê de as mudanças que fazemos em entidades pêgas do banco de dados no Spring Data JPA são realmente persistidas no banco de dados sem termos que explicitamente chamar um método de atualizar ou algo do tipo.

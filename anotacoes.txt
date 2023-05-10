@@ -56,6 +56,8 @@ Boa parte das annotations que adicionamos e configurações que fazemos nas enti
 
 Importante saber que, se não estivermos utilizando o Hibernate, devemos adicionar uma tag "class" no "persistence.xml" para cada entidade que criarmos no sistema, contendo o full qualified name das classes. Se estivermos utilizando o Hibernate não precisamos fazer isso, pois ele procura as entidades automaticamente.
 
+A JPA precisa que as entidades tenham um construtor padrão, pois ela usa esse construtor nos métodos de "SELECT" e etc.
+
 ============CARDINALIDADE============
 
 As annotations de cardinalidade sempre se referem primeiro à entidade na qual estamos colocando a annotation.
@@ -75,3 +77,35 @@ Para criarmos um "EntityManagerFactory", precisamos utilizar o método estático
 Na JPA é muito comum o uso de DAOs, assim como no JDBC.
 
 Nas nossas classes DAO é comum que façamos apenas as ações de acesso a dados das nossas entidades. Coisas como a criação de um EntityManager ou algo do tipo não são responsabilidade das classes DAO.
+
+============CICLO DE VIDA DAS ENTIDADES============
+
+Estados no "INSERT":
+
+    - TRANSIENT:
+
+        Entidades entram nesse estado quando instanciamos elas.
+
+        A entidade em questão ainda não estará persistida, mas estará pronta para ser.
+
+    - MANAGED:
+
+        Entidades entram nesse estado depois de executarmos o método "persist()" do EntityManager. Isso não quer dizer que elas já foram persistidas no banco de dados, pois ainda é necessário executar o commit da transação. Quando o commit ou flush for executado, entidades "MANAGED" serão persistidas no banco.
+
+        A JPA fica observando entidades que estão nesse estado, assim podendo capturar mudanças na entidade que ocorrerem após o método "persist()" e deixar tudo de acordo no banco de dados também, executando statements de "UPDATE" e etc.
+
+    - DETACHED:
+
+        Entidades entram nesse estado quando o EntityManager é fechado após a persistência dos dados ou é limpo com o método "clear()".
+
+        Entidades nesse estado já possuem id e já estão persistidas, mas a JPA não estará mais observando mudanças na instância da entidade, assim fazendo com que qualquer mudança que façamos não afete a entidade persistida no banco de dados.
+
+        Podemos criar uma nova referência à entidade "DETACHED" só que com o estado "MANAGED" com o método "merge()" do EntityManager, que retorna uma nova referência à entidade passado pro parâmetro, só que com o estado "MANAGED".
+
+É interessante saber que sempre que pegamos uma entidade do banco de dados com um "find()", ela já vem no estado "MANAGED", ou seja, qualquer modificação que fizermos nela será persistida no commit.
+
+     - REMOVED:
+
+        Entidades nesse estado são deletadas do banco de dados após o commit/flush.
+
+        Entidades entram nesse estado quando o método "remove(<entidade>)" do EntityManager é executado. Deleta a entidade pelo seu id.
