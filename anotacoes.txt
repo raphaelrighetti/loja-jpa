@@ -12,3 +12,54 @@ A JPA é uma especificação que surgiu para padronizar o ORM no mundo Java, de 
 
 Essa especificação facilitou muito a vida dos desenvolvedores, fazendo com que os sistemas não ficassem dependentes de implementações.
 
+============persistence.xml============
+
+É o arquivo onde ficam as configurações da JPA.
+
+Podemos fazer essas configurações em arquivos Java também, mas o mais comum é ficar no XML mesmo.
+
+Esse arquivo deve ficar dentro da pasta "META-INF". Se for um projeto Maven, essa pasta deve estar dentro da pasta "resources".
+
+============<persistence-unit></persistence-unit>============
+
+É a tag que define a nossa unidade de persistência. Ela que irá armazenar todas as outras tags de configuração da JPA.
+
+Ela fica dentro da tag "persistence", que é a tag mãe do "persistence.xml" e que é padrão.
+
+Temos que ter uma "persistence-unit" para cada banco de dados que iremos utilizar na nossa aplicação.
+
+Propriedades principais:
+
+    - name:
+
+        Aqui colocamos o nome da nossa "persistence-unit" (não precisa ser o mesmo nome do projeto).
+
+    - transaction-type:
+
+        Aqui especificamos o modelo de transações, podendo mudar entre "JTA", que usamos para utilizar a JTA padrão (só funciona se estivermos em um servidor de aplicação), e "RESOURCE_LOCAL", que utilizamos quando não estamos em um servidor de aplicação.
+
+        Quando estamos trabalhando com "RESOURCE_LOCAL", nós mesmos que devemos gerenciar as transações com o banco de dados. Para fazer isso, basta utilizarmos o método "getTransaction()" do "EntityManager" e utilizarmos os métodos "begin()", "commit()", "rollback()", etc. desse objeto que pegamos.
+
+============<properties></properties>============
+
+É a tag onde colocamos as nossas propriedades de configuração, cada uma sendo uma tag "property".
+
+Existem propriedade obrigatórias, como driver JDBC do banco de dados, url de acesso e etc.
+
+Existem propriedades específicas de implementação, que na maioria dos casos, são do Hibernate, como por exemplo o dialeto do Hibernate, que precisamos definir para o Hibernate saber especificamente qual o dialeto tem que usar para o nosso banco de dados. Uma muito importante é a que define se o Hibernate deve criar, fazer update, dropar tabelas e etc. automaticamente ("hibernate.hbm2ddl.auto").
+
+============ENTIDADES============
+
+São as classes que fazem o mapeamento de tabelas no banco de dados.
+
+Boa parte das annotations que adicionamos e configurações que fazemos nas entidades do Spring Data JPA funcionam da mesma forma no JPA sem o Spring, portanto não vou ficar anotando tudo, apenas coisas que eu não souber.
+
+Importante saber que, se não estivermos utilizando o Hibernate, devemos adicionar uma tag "class" no "persistence.xml" para cada entidade que criarmos no sistema, contendo o full qualified name das classes. Se estivermos utilizando o Hibernate não precisamos fazer isso, pois ele procura as entidades automaticamente.
+
+============EntityManager============
+
+É a interface que utilizamos para fazer toda a persistência das nossas entidades no banco de dados.
+
+Para criarmos um EntityManager, precisamos de um "EntityManagerFactory", que será encarregado de nos retornar um EntityManager do jeito que a gente precisa quando utilizarmos o método "createEntityManager()".
+
+Para criarmos um "EntityManagerFactory", precisamos utilizar o método estático "createEntityManagerFactory(<nome da persistence-unit>)" da classe "Persistence", que vem com o JPA. Sempre precisamos passar o nome da persistence-unit neste método.
