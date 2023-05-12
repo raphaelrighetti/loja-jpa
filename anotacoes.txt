@@ -109,3 +109,15 @@ Estados no "INSERT":
         Entidades nesse estado são deletadas do banco de dados após o commit/flush.
 
         Entidades entram nesse estado quando o método "remove(<entidade>)" do EntityManager é executado. Deleta a entidade pelo seu id.
+
+============find(<Classe>, <Long id>)============
+
+É um método que nos retorna um registro da entidade no banco de dados a partir do id passado por parâmetro.
+
+============JPQL (Java Persistence Query Language)============
+
+É uma linguagem similar ao SQL padrão, mas que funciona com a orientação a objetos. Passamo o nome da entidade em vez do nome da tabela e etc.
+
+Usamos o JPQL com o método "createQuery()" do EntityManager, podendo passar a nossa String JPQL sozinha como parâmetro, ou passando também o tipo que esperamos como retorno como segundo parâmetro. Esse método retorna um "TypedQuery", que podemos utilizar o método "getResultList()" para obter uma lista com os resultados. Também podemos usar o método "getSingleResult()" para pegarmos um único resultado de um query.
+
+De modo geral, a JPQL funciona do mesmo jeito que no Spring Data JPA, podendo passar parâmetros nomeados ou por índice e etc.
