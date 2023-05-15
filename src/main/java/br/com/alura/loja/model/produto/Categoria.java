@@ -1,4 +1,4 @@
-package br.com.alura.loja.model;
+package br.com.alura.loja.model.produto;
 
 import javax.persistence.*;
 

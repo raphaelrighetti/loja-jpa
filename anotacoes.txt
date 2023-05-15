@@ -121,3 +121,25 @@ Estados no "INSERT":
 Usamos o JPQL com o método "createQuery()" do EntityManager, podendo passar a nossa String JPQL sozinha como parâmetro, ou passando também o tipo que esperamos como retorno como segundo parâmetro. Esse método retorna um "TypedQuery", que podemos utilizar o método "getResultList()" para obter uma lista com os resultados. Também podemos usar o método "getSingleResult()" para pegarmos um único resultado de um query.
 
 De modo geral, a JPQL funciona do mesmo jeito que no Spring Data JPA, podendo passar parâmetros nomeados ou por índice e etc.
+
+============@ManyToMany============
+
+Quando temos um relacionamenteo de muitos para muitos, é comum e aconselhável que tenhamos uma tabela de join dessa relação, uma tabela que irá servir para armazenar todas as combinações existentes dessa relação.
+
+Quando utilizamos a annotation "@ManyToMany", a JPA já assume que teremos uma tabela de join desse relacionamento, tendo um padrão de nomenclatura que será o nome padrão dessa tabela, mas que podemos mudar com a annotation "@JoinTable".
+
+Lembrando que só usamos dessa forma quando temos um relacionamento muitos para muitos simples, onde temos que guardar informações apenas dos ids das entidades nesse relacionamento. Quando temos que guardar mais informações em um relação muitos para muitos, devemos criar uma nova entidade que será responsável por armazenar essas informações e as referências para as entidades envolvidas no relacionamento.
+
+Em relacionamentos "@ManyToMany" ou "@OneToMany", o atributo que irá armazenar essas referências deverá ser uma lista.
+
+============RELACIONAMENTO BIDIRECIONAL============
+
+Relacionamentos bidirecionais são relacionamentos onde as duas entidades em um relacionamento tem o relacionamento uma com a outra.
+
+Quando temos uma situação assim, temos que especificar para a JPA que esse relacionamento bidirecional é intencional e é a outra extremidade do relacionamento que já existe, se não ela irá criar um outro relacionamento, ignorando o que já temos na outra entidade envolvida no relacionamento.
+
+Para especificarmos que já temos um relacionamento bidirecional que deve ser utilizado, temos que inserir o parâmetro "mappedBy = <nome_do_atributo>", onde passamos o nome do atributo onde está o relacionamento que criamos na outra entidade.
+
+============cascade = CascadeType.ALL============
+
+É uma parâmetro que passamos para annotations de relacionamento bidirecional, que serve para informarmos a JPA que ela deve fazer também a persistencia dos dados da entidade que tem o relacionamento com a entidade que estamos persistindo, como por exemplo salvar os "ItemPedido" sempre que salvarmos um "Pedido". Quando usamos o "ALL", as ações de delete e update também serão refletidas na entidade do relacionamento.

@@ -1,9 +1,14 @@
 package br.com.alura.loja;
 
-import br.com.alura.loja.model.Categoria;
-import br.com.alura.loja.model.CategoriaDAO;
-import br.com.alura.loja.model.Produto;
-import br.com.alura.loja.model.ProdutoDAO;
+import br.com.alura.loja.model.cliente.Cliente;
+import br.com.alura.loja.model.cliente.ClienteDAO;
+import br.com.alura.loja.model.pedido.Pedido;
+import br.com.alura.loja.model.pedido.PedidoDAO;
+import br.com.alura.loja.model.produto.Categoria;
+import br.com.alura.loja.model.produto.CategoriaDAO;
+import br.com.alura.loja.model.produto.Produto;
+import br.com.alura.loja.model.produto.ProdutoDAO;
+import br.com.alura.loja.model.relationship.ItemPedido;
 import br.com.alura.loja.util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -12,24 +17,28 @@ import java.util.List;
 
 public class LojaApplication {
     public static void main(String[] args) {
-        cadastrarProduto();
-        listarProdutos();
+        popularBancoDeDados();
+//        listarProdutos();
+        cadastrarPedido();
     }
 
-    private static void cadastrarProduto() {
+    private static void popularBancoDeDados() {
         EntityManager entityManager = JPAUtil.getEntityManager();
         ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
         CategoriaDAO categoriaDAO = new CategoriaDAO(entityManager);
+        ClienteDAO clienteDAO = new ClienteDAO(entityManager);
+
+        Categoria talher = new Categoria("Talher");
+        Produto colher = new Produto("Faca", "Ela corta.", talher, new BigDecimal("10"));
+        Cliente cliente = new Cliente("Raphael", "123");
 
         try {
-            Categoria talher = new Categoria("Talher");
-
-            Produto colher = new Produto("Faca", "Ela corta.", talher, new BigDecimal("10"));
 
             entityManager.getTransaction().begin();
 
             categoriaDAO.cadastrar(talher);
             produtoDAO.cadastrar(colher);
+            clienteDAO.cadastrar(cliente);
 
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -69,5 +78,32 @@ public class LojaApplication {
         BigDecimal precoDoProduto = produtoDAO.detalharPrecoPorNome("Faca");
 
         System.out.println("\nPreço do produto com nome \"Faca\": " + precoDoProduto.toString() + "\n");
+    }
+
+    private static void cadastrarPedido() {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        ClienteDAO clienteDAO = new ClienteDAO(entityManager);
+        ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
+        PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
+
+        try {
+         Cliente cliente = clienteDAO.detalhar(1L);
+         Produto produto = produtoDAO.detalhar(1L);
+         Pedido pedido = new Pedido(cliente);
+
+         ItemPedido itemPedido = new ItemPedido(4, produto, pedido);
+
+         entityManager.getTransaction().begin();
+
+         pedido.adicionarItem(itemPedido);
+         pedidoDAO.cadastrar(pedido);
+
+         entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            entityManager.close();
+        }
     }
 }

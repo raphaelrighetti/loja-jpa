@@ -61,3 +61,13 @@ Foi um curso muito bom no geral e sinto que entendo mais de JPA agora do que qua
 ## Java e JPA: consultas avançadas, performance e modelos complexos
 
 Neste curso irei aprofundar o meu conhecimento sobre a JPA, realizando consultas avançadas, aprendendo como lidar com relações "ManyToMany", como deixar as consultas e ações no banco de dados com uma performance melhor e etc.
+
+### Aula 1
+
+#### Criando relacionamentos mais complexos
+
+Nesta aula aprendi como criar relacionamentos "ManyToMany", utilizando uma tabela de join para armazenar todas as combinações existentes nessa relação. Como essa tabela de join precisava armazenar mais informações, como a quantidade do produto no pedido, tive que criar uma nova entidade que representa essa tabela de join do relacionamento.
+
+Aprendi também a utilizar os parâmetros "mappedBy", para indicar que o relacionamento é um relacionamento bidirecional e não um novo relacionamento, e "cascade", para indicar que a JPA deve fazer as ações de persistência na entidade relacionada também, sem termos que criar um DAO para essa entidade e fazer a persistência dela manualmente.
+
+Tudo isso de relacionamentos bidirecionais e muitos para muitos foram coisas novas para mim, não sabia muito sobre esse tipo de relacionamento no SQL em si. É um tópico muito interessante e que gostei muito de saber, pois agora vejo muito mais possibilidades de coisas que posso fazer com relações de muitos para muitos e etc.
