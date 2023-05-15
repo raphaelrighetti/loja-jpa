@@ -1,4 +1,6 @@
-# JPA -Loja
+# JPA - Loja
+
+Projeto desenvolvido em dois cursos sobre a JPA da Alura, com o intuito de aprofundar o conhecimento nessa especificação.
 
 ## Persistência com JPA: Hibernate
 
@@ -55,3 +57,7 @@ Neste curso pude aprender o básico de como utilizar a JPA com o Hibernate em um
 Além disso, aprendi sobre o ciclo de vida das entidades JPA, coisa que eu não fazia ideia e clareou muito algumas coisas na minha cabeça. Agora sei como funcionam as atualizações no banco de dados das entidades já registradas, o que eu sempre fiquei em dúvida de como funcionava por baixo dos panos.
 
 Foi um curso muito bom no geral e sinto que entendo mais de JPA agora do que quando estava trabalhando somente com o Spring Data JPA.
+
+## Java e JPA: consultas avançadas, performance e modelos complexos
+
+Neste curso irei aprofundar o meu conhecimento sobre a JPA, realizando consultas avançadas, aprendendo como lidar com relações "ManyToMany", como deixar as consultas e ações no banco de dados com uma performance melhor e etc.
